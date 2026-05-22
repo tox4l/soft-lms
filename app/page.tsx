@@ -20,10 +20,6 @@ export default function HomePage() {
         <div className="max-w-5xl mx-auto px-5 sm:px-7 md:px-10 py-12 md:py-20 fade-up">
           {/* Hero */}
           <div className="mb-16 md:mb-20">
-            <div className="inline-flex items-center gap-2 rounded-full border border-ink-800 bg-ink-900/60 px-3 py-1 text-[11px] tracking-wider uppercase text-ink-300 mb-7">
-              <span className="h-1.5 w-1.5 rounded-full bg-white shadow-glow-sm animate-pulse" />
-              SOFT2301 · University of Doha for Science &amp; Technology
-            </div>
             <h1 className="font-display italic font-normal text-white leading-[0.95] tracking-tight text-[56px] sm:text-7xl md:text-[88px] mb-6 glow-text">
               Software<br />
               <span className="text-ink-300">Project</span><br />
