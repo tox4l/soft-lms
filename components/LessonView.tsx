@@ -13,6 +13,8 @@ export default function LessonView({
   next,
   quizSlug,
   quizCount,
+  examSlug,
+  examCount,
   wide,
   children,
 }: {
@@ -24,6 +26,8 @@ export default function LessonView({
   next: Nav;
   quizSlug?: string;
   quizCount?: number;
+  examSlug?: string;
+  examCount?: number;
   wide?: boolean;
   children: React.ReactNode;
 }) {
@@ -71,23 +75,45 @@ export default function LessonView({
 
       {children}
 
-      {quizSlug && (
-        <Link
-          href={`/quiz/${quizSlug}`}
-          className="group mt-16 block rounded-2xl border border-emerald-400/25 bg-gradient-to-br from-emerald-500/[.06] to-transparent p-6 md:p-8 hover:border-emerald-400/40 transition-colors active:translate-y-[1px]"
-        >
-          <div className="flex items-center gap-5">
-            <div className="hidden sm:grid h-14 w-14 shrink-0 rounded-2xl bg-emerald-500/10 border border-emerald-400/25 place-items-center text-emerald-200 font-semibold text-lg tabular-nums">
-              {quizCount}
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className="text-[11px] uppercase tracking-[0.16em] text-emerald-300/80 mb-1">Test yourself</div>
-              <div className="text-white font-semibold text-lg leading-tight">Take the {week} quiz</div>
-              <div className="text-sm text-ink-400 mt-1">{quizCount} multiple-choice questions, randomised order</div>
-            </div>
-            <span className="text-ink-300 group-hover:text-emerald-200 transition-colors text-lg">→</span>
-          </div>
-        </Link>
+      {(quizSlug || examSlug) && (
+        <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-3">
+          {quizSlug && (
+            <Link
+              href={`/quiz/${quizSlug}`}
+              className="group block rounded-2xl border border-ink-800 bg-gradient-to-br from-ink-900/40 to-ink-950 p-6 hover:border-ink-600 transition-colors active:translate-y-[1px]"
+            >
+              <div className="flex items-center gap-4">
+                <div className="hidden sm:grid h-12 w-12 shrink-0 rounded-xl bg-white/[.05] border border-white/15 place-items-center text-white font-semibold tabular-nums">
+                  {quizCount}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="text-[11px] uppercase tracking-[0.16em] text-ink-400 mb-1">Practice quiz</div>
+                  <div className="text-white font-semibold text-lg leading-tight">Mixed-format practice</div>
+                  <div className="text-sm text-ink-400 mt-0.5">{quizCount} questions · MCQ + fill + multi-select</div>
+                </div>
+                <span className="text-ink-300 group-hover:text-white transition-colors text-lg">→</span>
+              </div>
+            </Link>
+          )}
+          {examSlug && (
+            <Link
+              href={`/quiz/${examSlug}`}
+              className="group block rounded-2xl border border-amber-400/25 bg-gradient-to-br from-amber-500/[.07] to-transparent p-6 hover:border-amber-400/40 transition-colors active:translate-y-[1px]"
+            >
+              <div className="flex items-center gap-4">
+                <div className="hidden sm:grid h-12 w-12 shrink-0 rounded-xl bg-amber-500/10 border border-amber-400/25 place-items-center text-amber-200 font-semibold tabular-nums">
+                  {examCount}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="text-[11px] uppercase tracking-[0.16em] text-amber-300/80 mb-1">Module exam · 80% to pass</div>
+                  <div className="text-white font-semibold text-lg leading-tight">Prove you remember it</div>
+                  <div className="text-sm text-ink-400 mt-0.5">{examCount} recall questions — passing marks the lesson done</div>
+                </div>
+                <span className="text-amber-300 group-hover:translate-x-0.5 transition-transform text-lg">→</span>
+              </div>
+            </Link>
+          )}
+        </div>
       )}
 
       <nav className="mt-16 pt-8 border-t border-ink-800 grid grid-cols-2 gap-4">

@@ -26,6 +26,7 @@ export default function QuizPage({ params }: { params: { slug: string } }) {
             quizSlug={quiz.slug}
             title={quiz.title}
             week={quiz.week}
+            kind={quiz.kind}
             lessonSlug={quiz.lessonSlug}
             questions={quiz.questions}
           />

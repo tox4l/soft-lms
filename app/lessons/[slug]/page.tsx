@@ -2,16 +2,22 @@ import { notFound } from "next/navigation";
 import Sidebar from "@/components/Sidebar";
 import LessonView from "@/components/LessonView";
 import MarkdownBody from "@/components/MarkdownBody";
+import Week1Lesson from "@/components/lessons/Week1Lesson";
+import Week2Lec1Lesson from "@/components/lessons/Week2Lec1Lesson";
+import Week2Lec2Lesson from "@/components/lessons/Week2Lec2Lesson";
 import Week3ALesson from "@/components/lessons/Week3ALesson";
 import Week3BLesson from "@/components/lessons/Week3BLesson";
 import { getAllLessons, getLessonBySlug } from "@/lib/lessons";
-import { getQuizByLesson } from "@/lib/questions";
+import { getQuizByLesson, getExamByLesson } from "@/lib/questions";
 
 export function generateStaticParams() {
   return getAllLessons().map((l) => ({ slug: l.slug }));
 }
 
 const RICH: Record<string, () => JSX.Element> = {
+  "week1-introduction-to-spm": Week1Lesson,
+  "week2-lecture1-waterfall-agile-scrum": Week2Lec1Lesson,
+  "week2-lecture2-wbs-scope-kanban-xp": Week2Lec2Lesson,
   "week3a-planning-and-estimation": Week3ALesson,
   "week3b-critical-path-method-worked-examples": Week3BLesson,
 };
@@ -20,6 +26,7 @@ export default function LessonPage({ params }: { params: { slug: string } }) {
   const lesson = getLessonBySlug(params.slug);
   if (!lesson) notFound();
   const quiz = getQuizByLesson(lesson.slug);
+  const exam = getExamByLesson(lesson.slug);
 
   const all = getAllLessons();
   const sidebarLessons = all.map(({ slug, title, week, kind, order }) => ({
@@ -51,6 +58,8 @@ export default function LessonPage({ params }: { params: { slug: string } }) {
             next={lesson.kind === "lecture" ? nav(next) : nav(sequence[0])}
             quizSlug={quiz?.slug}
             quizCount={quiz?.questions.length}
+            examSlug={exam?.slug}
+            examCount={exam?.questions.length}
             wide={isRich}
           >
             {isRich ? <RichBody /> : <MarkdownBody raw={lesson.raw} />}
