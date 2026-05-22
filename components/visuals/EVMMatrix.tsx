@@ -31,17 +31,19 @@ const toneLabel = {
 export default function EVMMatrix() {
   return (
     <div className="rounded-3xl border border-ink-800 bg-ink-950 overflow-hidden">
-      <div className="grid grid-cols-[1fr_1fr_1fr_1fr_1fr] gap-px bg-ink-800">
-        {/* Header */}
-        {["PV", "EV", "AC", "Schedule", "Budget"].map((h) => (
-          <div key={h} className="bg-ink-950 px-4 py-2.5 text-[11px] uppercase tracking-wider text-ink-400 font-medium">
-            {h}
-          </div>
-        ))}
-        {/* Body */}
-        {rows.map((r, i) => (
-          <Row key={i} row={r} />
-        ))}
+      <div className="overflow-x-auto">
+        <div className="grid grid-cols-[1fr_1fr_1fr_1.6fr_1.6fr] gap-px bg-ink-800 min-w-[560px]">
+          {/* Header */}
+          {["PV", "EV", "AC", "Schedule", "Budget"].map((h) => (
+            <div key={h} className="bg-ink-950 px-4 py-2.5 text-[11px] uppercase tracking-wider text-ink-400 font-medium">
+              {h}
+            </div>
+          ))}
+          {/* Body */}
+          {rows.map((r, i) => (
+            <Row key={i} row={r} />
+          ))}
+        </div>
       </div>
       <div className="px-4 py-3 border-t border-ink-800 bg-ink-900/40 text-xs text-ink-400 flex flex-wrap gap-x-6 gap-y-1">
         <span><span className="text-ink-200 font-medium">EV vs PV →</span> schedule</span>

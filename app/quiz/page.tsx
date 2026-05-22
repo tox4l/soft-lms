@@ -13,18 +13,17 @@ export default function QuizIndex() {
   return (
     <div className="flex">
       <Sidebar lessons={sidebarLessons} />
-      <main className="flex-1 min-w-0">
-        <div className="max-w-4xl mx-auto px-6 md:px-8 py-14 md:py-16">
+      <main className="flex-1 min-w-0 pt-14 md:pt-0">
+        <div className="max-w-4xl mx-auto px-5 sm:px-7 md:px-10 py-10 md:py-16">
           <div className="mb-12">
-            <div className="text-xs uppercase tracking-[0.18em] text-emerald-300/80 font-medium mb-3">
+            <div className="text-[11px] uppercase tracking-[0.18em] text-ink-400 font-medium mb-4">
               Question Bank
             </div>
-            <h1 className="text-4xl md:text-5xl font-semibold tracking-tight text-white leading-[1.05] mb-3">
-              Practice quizzes
+            <h1 className="font-display italic font-normal text-white leading-[1.02] tracking-tight text-[48px] sm:text-5xl md:text-6xl mb-4 glow-text-soft">
+              Practice quizzes.
             </h1>
-            <p className="text-lg text-ink-300 max-w-2xl leading-relaxed">
-              {totalQuestions} multiple-choice questions, divided by lecture. Pick a lecture below.
-              Each quiz scrambles its question order and tracks your best score locally.
+            <p className="text-base sm:text-lg text-ink-300 max-w-2xl leading-relaxed">
+              {totalQuestions} questions, divided by lecture. Each quiz scrambles its order and tracks your best score locally.
             </p>
           </div>
 

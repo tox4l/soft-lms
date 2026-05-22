@@ -47,23 +47,23 @@ export default function LessonView({
   return (
     <div className="fade-up">
       <div className="mb-10">
-        <div className="text-xs font-medium uppercase tracking-wider text-accent-fg mb-3">{week}</div>
-        <h1 className={["font-bold tracking-tight text-white leading-[1.05] mb-3", wide ? "text-4xl md:text-5xl" : "text-4xl md:text-5xl"].join(" ")}>
+        <div className="text-[11px] font-medium uppercase tracking-[0.18em] text-ink-400 mb-4">{week}</div>
+        <h1 className="font-display italic font-normal text-white tracking-tight leading-[1.02] text-[44px] sm:text-5xl md:text-6xl mb-4 glow-text-soft">
           {title}
         </h1>
-        {subtitle && <p className="text-lg text-ink-300 leading-relaxed max-w-3xl">{subtitle}</p>}
+        {subtitle && <p className="text-base sm:text-lg text-ink-300 leading-relaxed max-w-3xl">{subtitle}</p>}
 
-        <div className="mt-6 flex items-center gap-3">
+        <div className="mt-7 flex items-center gap-3">
           <button
             onClick={toggleDone}
             className={[
               "inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-medium transition-all active:translate-y-[1px]",
               isDone
-                ? "bg-violet-500/15 text-violet-300 border border-violet-500/40"
-                : "bg-ink-800 text-ink-200 border border-ink-700 hover:border-ink-600 hover:bg-ink-700",
+                ? "bg-white text-ink-950 border border-white shadow-glow-sm"
+                : "bg-ink-900 text-ink-200 border border-ink-700 hover:border-ink-500 hover:bg-ink-800",
             ].join(" ")}
           >
-            <span className={isDone ? "text-violet-400" : "text-ink-500"}>{isDone ? "✓" : "○"}</span>
+            <span className={isDone ? "text-ink-950" : "text-ink-500"}>{isDone ? "✓" : "○"}</span>
             {isDone ? "Marked as complete" : "Mark as complete"}
           </button>
         </div>
@@ -97,7 +97,7 @@ export default function LessonView({
             className="group flex flex-col gap-1 rounded-xl border border-ink-800 bg-ink-900/40 px-5 py-4 hover:border-ink-700 hover:bg-ink-900 transition-colors"
           >
             <span className="text-xs text-ink-400">← Previous · {prev.week}</span>
-            <span className="text-white font-medium group-hover:text-accent-fg transition-colors">{prev.title}</span>
+            <span className="text-white font-medium group-hover:text-white transition-colors">{prev.title}</span>
           </Link>
         ) : (
           <div />
@@ -108,7 +108,7 @@ export default function LessonView({
             className="group flex flex-col gap-1 rounded-xl border border-ink-800 bg-ink-900/40 px-5 py-4 hover:border-ink-700 hover:bg-ink-900 transition-colors text-right"
           >
             <span className="text-xs text-ink-400">Next · {next.week} →</span>
-            <span className="text-white font-medium group-hover:text-accent-fg transition-colors">{next.title}</span>
+            <span className="text-white font-medium group-hover:text-white transition-colors">{next.title}</span>
           </Link>
         ) : (
           <div />

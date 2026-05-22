@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 
 type SidebarLesson = {
   slug: string;
@@ -13,6 +14,7 @@ type SidebarLesson = {
 
 export default function Sidebar({ lessons }: { lessons: SidebarLesson[] }) {
   const pathname = usePathname();
+  const [open, setOpen] = useState(false);
   const [completed, setCompleted] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
@@ -20,8 +22,105 @@ export default function Sidebar({ lessons }: { lessons: SidebarLesson[] }) {
       const raw = localStorage.getItem("soft-lms:completed");
       if (raw) setCompleted(JSON.parse(raw));
     } catch {}
+    const sync = () => {
+      try {
+        const raw = localStorage.getItem("soft-lms:completed");
+        setCompleted(raw ? JSON.parse(raw) : {});
+      } catch {}
+    };
+    window.addEventListener("storage", sync);
+    return () => window.removeEventListener("storage", sync);
   }, []);
 
+  // Close drawer on navigation
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
+
+  // Lock body scroll while drawer open
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
+  return (
+    <>
+      {/* Mobile top bar — fixed at top, only on small screens */}
+      <header className="md:hidden fixed top-0 left-0 right-0 z-30 flex items-center justify-between gap-3 px-4 h-14 bg-ink-950/90 backdrop-blur-md border-b border-ink-800/80">
+        <button
+          onClick={() => setOpen(true)}
+          aria-label="Open menu"
+          className="h-9 w-9 grid place-items-center rounded-md border border-ink-800 bg-ink-900 text-ink-200 hover:text-white active:translate-y-[1px] transition-colors"
+        >
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M2 4h12M2 8h12M2 12h12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+          </svg>
+        </button>
+        <Link href="/" className="flex items-center gap-2">
+          <span className="h-7 w-7 rounded-md bg-white grid place-items-center text-ink-950 font-bold text-xs shadow-glow-sm">
+            S
+          </span>
+          <span className="text-sm font-semibold text-white tracking-tight">SOFT2301</span>
+        </Link>
+        <span className="w-9" aria-hidden />
+      </header>
+
+      {/* Desktop sidebar */}
+      <aside className="hidden md:flex flex-col w-72 shrink-0 border-r border-ink-800 bg-ink-950 h-screen sticky top-0 overflow-y-auto">
+        <SidebarContent lessons={lessons} pathname={pathname} completed={completed} />
+      </aside>
+
+      {/* Mobile drawer */}
+      <AnimatePresence>
+        {open && (
+          <>
+            <motion.div
+              key="backdrop"
+              className="md:hidden fixed inset-0 z-40 bg-black/60 backdrop-blur-sm"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.18 }}
+              onClick={() => setOpen(false)}
+            />
+            <motion.aside
+              key="drawer"
+              className="md:hidden fixed inset-y-0 left-0 z-50 w-[280px] max-w-[85vw] bg-ink-950 border-r border-ink-800 flex flex-col overflow-y-auto"
+              initial={{ x: "-100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "-100%" }}
+              transition={{ type: "spring", stiffness: 280, damping: 30 }}
+            >
+              <button
+                onClick={() => setOpen(false)}
+                aria-label="Close menu"
+                className="absolute top-3 right-3 h-9 w-9 grid place-items-center rounded-md border border-ink-800 bg-ink-900 text-ink-300 hover:text-white active:translate-y-[1px] z-10"
+              >
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path d="M3 3l8 8M11 3l-8 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                </svg>
+              </button>
+              <SidebarContent lessons={lessons} pathname={pathname} completed={completed} />
+            </motion.aside>
+          </>
+        )}
+      </AnimatePresence>
+    </>
+  );
+}
+
+function SidebarContent({
+  lessons,
+  pathname,
+  completed,
+}: {
+  lessons: SidebarLesson[];
+  pathname: string;
+  completed: Record<string, boolean>;
+}) {
   const lectures = lessons.filter((l) => l.kind === "lecture");
   const cram = lessons.filter((l) => l.kind === "cram");
   const total = lectures.length;
@@ -29,11 +128,11 @@ export default function Sidebar({ lessons }: { lessons: SidebarLesson[] }) {
   const pct = total ? Math.round((done / total) * 100) : 0;
 
   return (
-    <aside className="w-72 shrink-0 border-r border-ink-800 bg-ink-950 h-screen sticky top-0 overflow-y-auto">
+    <div className="flex flex-col min-h-full">
       <div className="px-5 py-6">
         <Link href="/" className="block group">
           <div className="flex items-center gap-2.5">
-            <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-violet-500 to-fuchsia-500 grid place-items-center text-white font-bold text-sm shadow-lg shadow-violet-900/40">
+            <div className="relative h-8 w-8 rounded-lg bg-white grid place-items-center text-ink-950 font-bold text-sm shadow-glow halo-pulse">
               S
             </div>
             <div>
@@ -48,16 +147,16 @@ export default function Sidebar({ lessons }: { lessons: SidebarLesson[] }) {
             <span>Progress</span>
             <span className="tabular-nums">{done}/{total}</span>
           </div>
-          <div className="h-1.5 rounded-full bg-ink-800 overflow-hidden">
+          <div className="h-1 rounded-full bg-ink-800 overflow-hidden">
             <div
-              className="h-full bg-gradient-to-r from-violet-500 to-fuchsia-500 transition-all duration-500"
-              style={{ width: `${pct}%` }}
+              className="h-full bg-white transition-all duration-500"
+              style={{ width: `${pct}%`, boxShadow: "0 0 12px rgba(255,255,255,0.4)" }}
             />
           </div>
         </div>
       </div>
 
-      <nav className="px-3 pb-8 space-y-6">
+      <nav className="px-3 pb-4 space-y-6 flex-1">
         <div>
           <Link
             href="/quiz"
@@ -96,9 +195,9 @@ export default function Sidebar({ lessons }: { lessons: SidebarLesson[] }) {
                       className={[
                         "mt-0.5 h-4 w-4 shrink-0 rounded-full border grid place-items-center text-[10px] font-medium",
                         isDone
-                          ? "border-violet-500 bg-violet-500 text-white"
+                          ? "border-white bg-white text-ink-950 shadow-glow-sm"
                           : active
-                          ? "border-ink-300 text-ink-300"
+                          ? "border-ink-200 text-ink-100"
                           : "border-ink-600 text-ink-500",
                       ].join(" ")}
                     >
@@ -141,6 +240,22 @@ export default function Sidebar({ lessons }: { lessons: SidebarLesson[] }) {
           </div>
         )}
       </nav>
-    </aside>
+
+      {/* VelocityAI byline */}
+      <div className="px-5 pt-4 pb-6 border-t border-ink-900">
+        <a
+          href="https://velocityai.me"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group inline-flex items-center gap-1.5 text-xs text-ink-500 hover:text-white transition-colors"
+        >
+          <span>by</span>
+          <span className="font-medium text-ink-300 group-hover:text-white">VelocityAI</span>
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none" className="opacity-60 group-hover:opacity-100 transition-opacity">
+            <path d="M3 7L7 3M7 3H4M7 3V6" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </a>
+      </div>
+    </div>
   );
 }

@@ -20,8 +20,8 @@ export default function QuizPage({ params }: { params: { slug: string } }) {
   return (
     <div className="flex">
       <Sidebar lessons={sidebarLessons} />
-      <main className="flex-1 min-w-0">
-        <div className="max-w-3xl mx-auto px-6 md:px-8 py-12 md:py-16">
+      <main className="flex-1 min-w-0 pt-14 md:pt-0">
+        <div className="max-w-3xl mx-auto px-5 sm:px-7 md:px-10 py-10 md:py-16">
           <Quiz
             quizSlug={quiz.slug}
             title={quiz.title}
