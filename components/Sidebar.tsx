@@ -65,7 +65,15 @@ export default function Sidebar({ lessons }: { lessons: SidebarLesson[] }) {
           </span>
           <span className="text-sm font-semibold text-white tracking-tight">SOFT2301</span>
         </Link>
-        <span className="w-9" aria-hidden />
+        <a
+          href="https://velocityai.me"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group inline-flex items-center gap-1 rounded-md border border-ink-800 bg-ink-900 px-2 h-9 text-[10px] uppercase tracking-[0.14em] text-ink-300 hover:text-white hover:border-ink-600 transition-colors"
+        >
+          <span className="text-ink-500 group-hover:text-ink-300">by</span>
+          <span className="font-medium">Velocity<span className="text-ink-400 group-hover:text-white">AI</span></span>
+        </a>
       </header>
 
       {/* Desktop sidebar */}
@@ -130,17 +138,29 @@ function SidebarContent({
   return (
     <div className="flex flex-col min-h-full">
       <div className="px-5 py-6">
-        <Link href="/" className="block group">
-          <div className="flex items-center gap-2.5">
-            <div className="relative h-8 w-8 rounded-lg bg-white grid place-items-center text-ink-950 font-bold text-sm shadow-glow halo-pulse">
-              S
+        <div className="flex items-start justify-between gap-2">
+          <Link href="/" className="block group flex-1 min-w-0">
+            <div className="flex items-center gap-2.5">
+              <div className="relative h-8 w-8 rounded-lg bg-white grid place-items-center text-ink-950 font-bold text-sm shadow-glow halo-pulse">
+                S
+              </div>
+              <div className="min-w-0">
+                <div className="text-white font-semibold text-sm tracking-tight">SOFT2301</div>
+                <div className="text-ink-400 text-xs">Project Management</div>
+              </div>
             </div>
-            <div>
-              <div className="text-white font-semibold text-sm tracking-tight">SOFT2301</div>
-              <div className="text-ink-400 text-xs">Project Management</div>
-            </div>
-          </div>
-        </Link>
+          </Link>
+          <a
+            href="https://velocityai.me"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group shrink-0 inline-flex items-center gap-1 rounded-md border border-ink-800 bg-ink-900 px-2 py-1 text-[9px] uppercase tracking-[0.14em] text-ink-300 hover:text-white hover:border-ink-600 transition-colors"
+            title="by VelocityAI"
+          >
+            <span className="text-ink-500 group-hover:text-ink-300">by</span>
+            <span className="font-medium">Velocity<span className="text-ink-400 group-hover:text-white">AI</span></span>
+          </a>
+        </div>
 
         <div className="mt-6">
           <div className="flex items-center justify-between text-xs text-ink-400 mb-2">
