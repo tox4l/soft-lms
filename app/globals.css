@@ -1,0 +1,106 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #0b0e18;
+  --bg-elev: #141826;
+  --border: #21283a;
+  --text: #e7ebf3;
+  --muted: #7d8aa1;
+  --accent: #7c5cff;
+  --accent-soft: #2a2348;
+}
+
+html, body { background: var(--bg); color: var(--text); }
+body { font-feature-settings: "ss01","cv11"; -webkit-font-smoothing: antialiased; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: #21283a; border-radius: 6px; }
+::-webkit-scrollbar-thumb:hover { background: #2c364f; }
+
+/* Markdown */
+.prose-soft { color: #e7ebf3; line-height: 1.7; font-size: 16px; max-width: 78ch; }
+.prose-soft h1 { font-size: 2.25rem; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 1rem; color: #fff; }
+.prose-soft h2 { font-size: 1.5rem; font-weight: 650; letter-spacing: -0.01em; margin: 2.4rem 0 1rem; color: #fff; padding-top: 1rem; border-top: 1px solid #21283a; }
+.prose-soft h2:first-of-type { border-top: none; padding-top: 0; }
+.prose-soft h3 { font-size: 1.15rem; font-weight: 600; margin: 1.8rem 0 .6rem; color: #d5dae3; }
+.prose-soft h4 { font-size: 1rem; font-weight: 600; margin: 1.4rem 0 .4rem; color: #aeb6c5; }
+.prose-soft p { margin: 0 0 1rem; }
+.prose-soft strong { color: #fff; font-weight: 650; }
+.prose-soft em { color: #b9a8ff; font-style: italic; }
+.prose-soft a { color: #b9a8ff; text-decoration: underline; text-underline-offset: 3px; }
+.prose-soft code:not(pre code) {
+  background: #1a1f30; color: #f0d5a8; padding: 1px 6px; border-radius: 4px;
+  font-size: 0.875em; border: 1px solid #21283a;
+}
+.prose-soft pre {
+  background: #0f1422; border: 1px solid #21283a; border-radius: 10px;
+  padding: 1rem; overflow-x: auto; margin: 1rem 0; font-size: 0.875rem;
+}
+.prose-soft blockquote {
+  border-left: 3px solid #7c5cff; background: rgba(124,92,255,.07);
+  padding: .75rem 1rem; margin: 1rem 0; border-radius: 0 8px 8px 0; color: #d5dae3;
+}
+.prose-soft blockquote p:last-child { margin-bottom: 0; }
+.prose-soft ul, .prose-soft ol { margin: 0 0 1rem; padding-left: 1.4rem; }
+.prose-soft li { margin: .3rem 0; }
+.prose-soft hr { border: none; border-top: 1px solid #21283a; margin: 2.5rem 0; }
+.prose-soft table {
+  width: 100%; border-collapse: collapse; margin: 1.25rem 0;
+  font-size: 0.92rem; background: #10141f; border: 1px solid #21283a; border-radius: 10px; overflow: hidden;
+}
+.prose-soft thead { background: #161b2b; }
+.prose-soft th, .prose-soft td { padding: .65rem .85rem; text-align: left; border-bottom: 1px solid #21283a; vertical-align: top; }
+.prose-soft th { font-weight: 600; color: #fff; font-size: 0.85rem; text-transform: uppercase; letter-spacing: .04em; }
+.prose-soft tr:last-child td { border-bottom: none; }
+.prose-soft tbody tr:hover { background: #141927; }
+
+/* Anchor links */
+.prose-soft h2 a, .prose-soft h3 a { color: inherit; text-decoration: none; }
+
+/* Selection */
+::selection { background: #7c5cff; color: #fff; }
+
+/* Animations */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.fade-up { animation: fadeUp .4s ease-out both; }
+
+/* Range slider polish */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  background: #21283a;
+  border-radius: 3px;
+  outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 14px;
+  width: 14px;
+  border-radius: 50%;
+  background: currentColor;
+  cursor: pointer;
+  box-shadow: 0 0 0 2px #0b0e18;
+  transition: transform 0.15s ease-out;
+}
+input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.15); }
+input[type="range"]::-moz-range-thumb {
+  height: 14px;
+  width: 14px;
+  border: 0;
+  border-radius: 50%;
+  background: currentColor;
+  cursor: pointer;
+  box-shadow: 0 0 0 2px #0b0e18;
+}
+
+/* Subtle critical-path pulse */
+@keyframes criticalPulse {
+  0%, 100% { filter: drop-shadow(0 0 0px rgba(245,158,11,0)); }
+  50% { filter: drop-shadow(0 0 6px rgba(245,158,11,0.6)); }
+}
+.critical-pulse { animation: criticalPulse 2.4s ease-in-out infinite; }

@@ -1,0 +1,17 @@
+  ▲ Next.js 14.2.18
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ✓ Ready in 1263ms
+ ○ Compiling / ...
+ ✓ Compiled / in 1533ms (514 modules)
+ GET / 200 in 1630ms
+ ○ Compiling /lessons/[slug] ...
+ ✓ Compiled /lessons/[slug] in 2.4s (1909 modules)
+ GET /lessons/week3a-planning-and-estimation 200 in 2797ms
+ GET /lessons/week3b-critical-path-method-worked-examples 200 in 37ms
+ GET /lessons/week1-introduction-to-spm 200 in 90ms
+ GET /lessons/week3b-critical-path-method-worked-examples 200 in 43ms
+ GET /lessons/week3a-planning-and-estimation 200 in 55ms
+ GET /lessons/week3b-critical-path-method-worked-examples 200 in 76ms
+ ✓ Compiled /quiz in 307ms (1897 modules)
